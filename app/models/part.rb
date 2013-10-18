@@ -1,2 +1,10 @@
 class Part < ActiveRecord::Base
+  belongs_to :category
+
+  has_many :part_values
+  has_many :part_attributes, :through => :part_values
+
+  accepts_nested_attributes_for :part_values
+
+  scope :recent, ->(n) { order('updated_at DESC').limit(n) }
 end
