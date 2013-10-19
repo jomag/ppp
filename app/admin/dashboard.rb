@@ -8,7 +8,7 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Recently updated parts" do
           ul do
             Part.recent(5).map do |part|
-              li link_to(part.name, admin_part_path(part))
+              li link_to(part.name, admin_category_part_path(part.category, part))
             end
           end
         end
