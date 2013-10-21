@@ -1,5 +1,6 @@
 ActiveAdmin.register PartAttribute do
   belongs_to :part
+  belongs_to :category
 
   controller do
     def permitted_params

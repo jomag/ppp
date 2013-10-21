@@ -6,11 +6,17 @@ ActiveAdmin.register Part do
       link_to p.reference, admin_category_part_path(p.category, p)
     end
     column "Name", :name
+    category.part_attributes.each do |a|
+      column a.name do |part|
+        part.part_value a
+      end
+    end
     actions
   end
 
   form :html => {} do |f|
     f.inputs "Part" do
+      f.input :name
       f.input :reference
     end
     f.has_many :part_values do |vf|
@@ -22,7 +28,8 @@ ActiveAdmin.register Part do
 
   controller do
     def permitted_params
-      params.permit(:part => [:reference, :name, :category_id])
+      params.permit :part => [:reference, :category_id, :name, :category_id,
+                              :part_values_attributes => [ :id, :part_attribute_id, :value ] ]
     end      
   end
 end

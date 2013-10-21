@@ -13,9 +13,20 @@ ActiveAdmin.register Category do
     actions
   end
 
+  form :html => {} do |f|
+    f.inputs "Category" do
+      f.input :name
+      f.has_many :category_attributes, heading: 'Attributes' do |ff|
+        ff.input :part_attribute
+      end
+    end
+    f.actions
+  end
+
   controller do
     def permitted_params
-      params.permit(:category => [:name])
+      params.permit :category => [:name,
+                                  :category_attributes_attributes => [:part_attribute_id]]
     end
   end
 end

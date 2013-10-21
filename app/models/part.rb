@@ -7,4 +7,13 @@ class Part < ActiveRecord::Base
   accepts_nested_attributes_for :part_values
 
   scope :recent, ->(n) { order('updated_at DESC').limit(n) }
+
+  def part_value(attr)
+    v = self.part_values.where(:part_attribute_id => attr.id).first
+    if v then
+      v.value
+    else
+      nil
+    end
+  end
 end
